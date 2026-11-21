@@ -10,7 +10,7 @@ source:
   sha256: 29515b9e6eb7e68f9286e0368d580f062738f69c2659d4396fdf8c0c09ef1b52
 
 build:
-  number: 0
+  number: 1
   script:
     - if: win
       then:
@@ -32,6 +32,13 @@ requirements:
   host:
     - hdf5
     - libojph
+    # The CMake config of hdf5 2.1.0, the newest hdf5 2 on linux-ppc64le,
+    # looks for zlib's headers.
+    - if: target_platform == "linux-ppc64le"
+      then: zlib
+  ignore_run_exports:
+    from_package:
+      - zlib
 
 tests:
   - package_contents:
